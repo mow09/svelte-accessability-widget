@@ -31,7 +31,8 @@
 	},
 	"peerDependencies": {
 		"@lucide/svelte": "^1.7.0",
-		"svelte": "^5.0.0"
+		"svelte": "^5.0.0",
+		"tailwindcss": "^4.0.0"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^2.0.3",

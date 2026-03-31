@@ -47,14 +47,29 @@ npm install github:mow09/svelte-accessibility-widget
 Then install the peer dependencies if you haven't already:
 
 ```sh
-npm install svelte @lucide/svelte
+npm install @lucide/svelte
 ```
 
-> **Peer dependencies:** `svelte ^5.0.0`, `@lucide/svelte ^1.7.0`
+> **Peer dependencies:** `svelte ^5.0.0`, `@lucide/svelte ^1.7.0`, `tailwindcss ^4.0.0`
+
+---
+
+## Tailwind setup
+
+The widget uses Tailwind CSS utility classes. Because `@tailwindcss/vite` skips `node_modules` by default, you need to add one line to your app's CSS file **before** `@import 'tailwindcss'`:
+
+```css
+@source "./node_modules/svelte-accessibility-widget/dist";
+@import 'tailwindcss';
+```
+
+> The path is relative to your CSS file. Adjust `./node_modules/...` if your CSS lives in a subdirectory (e.g. `../../node_modules/...`).
 
 ---
 
 ## Basic usage
+
+Place the widget in your `src/routes/+layout.svelte` so it appears on every page:
 
 ```svelte
 <script>
@@ -240,9 +255,13 @@ import {
 
 ```sh
 npm install
-npm run dev        # demo app at localhost:5173
+npm run dev        # library demo at localhost:5173
 npm run check      # TypeScript + Svelte diagnostics
 npm run build      # build the library
 ```
 
-Everything in `src/lib/` is the library. `src/routes/` is the demo app.
+Everything in `src/lib/` is the library. `svelte-demo/` is a standalone SvelteKit app that installs the widget as a consumer would — run it with:
+
+```sh
+cd svelte-demo && npm install && npm run dev
+```
