@@ -40,7 +40,7 @@
 		close: 'Schließen',
 		reset: 'Zurücksetzen',
 		hideToolbar: 'Symbolleiste ausblenden',
-		poweredBy: 'Powered by svelte-accessability-widget'
+		poweredBy: 'Powered by svelte-accessibility-widget'
 	};
 
 	const l = $derived({ ...defaultLabels, ...labels });
