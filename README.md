@@ -1,4 +1,4 @@
-# svelte-accessability-widget
+# svelte-accessibility-widget
 
 A themeable, accessible Svelte 5 accessibility widget — floating FAB, sliding panel, built-in features, localStorage persistence, dark mode, and an easy API for adding your own features.
 
@@ -41,7 +41,7 @@ Features planned for upcoming releases:
 ## Installation
 
 ```sh
-npm install github:mow09/svelte-accessability-widget
+npm install github:mow09/svelte-accessibility-widget
 ```
 
 Then install the peer dependencies if you haven't already:
@@ -58,7 +58,7 @@ npm install svelte @lucide/svelte
 
 ```svelte
 <script>
-  import { AccessibilityWidget } from 'svelte-accessability-widget';
+  import { AccessibilityWidget } from 'svelte-accessibility-widget';
 </script>
 
 <AccessibilityWidget theme="indigo" position="bottom-right" />
@@ -133,7 +133,7 @@ The simplest way. The CSS is injected when the toggle is on and removed when off
 
 ```svelte
 <script>
-  import { AccessibilityWidget } from 'svelte-accessability-widget';
+  import { AccessibilityWidget } from 'svelte-accessibility-widget';
   import { Focus } from '@lucide/svelte';
 </script>
 
@@ -222,7 +222,7 @@ import {
   // CSS utility
   injectStyle,           // injectStyle(id, css) — idempotent style tag injection
   removeStyle,           // removeStyle(id) — removes injected style tag
-} from 'svelte-accessability-widget';
+} from 'svelte-accessibility-widget';
 ```
 
 ---

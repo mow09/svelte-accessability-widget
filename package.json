@@ -1,6 +1,6 @@
 {
-	"name": "svelte-accessability-widget",
-	"version": "0.0.1",
+"name": "svelte-accessibility-widget",
+"version": "0.0.2",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run prepack",
