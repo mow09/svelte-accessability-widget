@@ -1,1 +1,26 @@
-// Reexport your entry components here
+export { default as AccessibilityWidget } from './components/AccessibilityWidget.svelte';
+export { default as FeatureCard } from './components/FeatureCard.svelte';
+export { default as FeatureRow } from './components/FeatureRow.svelte';
+
+export { default as HighContrast } from './features/HighContrast.svelte';
+export { default as Grayscale } from './features/Grayscale.svelte';
+export { default as FontSize } from './features/FontSize.svelte';
+export { default as PauseAnimations } from './features/PauseAnimations.svelte';
+export { default as HighlightLinks } from './features/HighlightLinks.svelte';
+export { default as BigCursor } from './features/BigCursor.svelte';
+export { default as TextSpacing } from './features/TextSpacing.svelte';
+export { default as LineHeight } from './features/LineHeight.svelte';
+export { default as DyslexiaFont } from './features/DyslexiaFont.svelte';
+
+export { presets, resolveTheme } from './themes.js';
+export { injectStyle, removeStyle } from './utils/style.js';
+
+export type {
+	ThemePreset,
+	ThemeConfig,
+	FeatureSize,
+	FeatureConfig,
+	Labels,
+	WidgetPosition,
+	WidgetProps
+} from './types.js';

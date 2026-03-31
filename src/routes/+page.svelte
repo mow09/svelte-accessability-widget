@@ -17,6 +17,7 @@
 		Code,
 		Globe
 	} from '@lucide/svelte';
+	import { AccessibilityWidget } from '$lib';
 
 	let mobileOpen = $state(false);
 	let faqOpen = $state<number | null>(null);
@@ -410,6 +411,9 @@
 		<p class="text-xs text-indigo-300 mt-4">No credit card required · Cancel anytime</p>
 	</div>
 </section>
+
+<!-- ACCESSIBILITY WIDGET -->
+<AccessibilityWidget theme="indigo" position="bottom-left" darkMode={false} />
 
 <!-- FOOTER -->
 <footer class="bg-slate-900 text-slate-400 py-16 px-4">

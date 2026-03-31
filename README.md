@@ -1,76 +1,248 @@
-# Svelte Accessibility Widget
+# svelte-accessability-widget
 
-An ADHD-friendly accessibility widget for Svelte applications, providing focused browsing and distraction-free experiences.
+A themeable, accessible Svelte 5 accessibility widget — floating FAB, sliding panel, built-in features, localStorage persistence, dark mode, and an easy API for adding your own features.
 
-## Tech Stack
+---
 
-- **Svelte 5** - Modern reactive UI framework
-- **TypeScript** - Type-safe development
-- **Tailwind CSS** - Utility-first CSS framework
-- **Vite** - Fast build tool and dev server
-- **Lucide Svelte** - Beautiful icon components
-- **ESLint & Prettier** - Code quality and formatting
+## Built-in features
 
-Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
+| Feature | Category | Effect |
+|---|---|---|
+| Hoher Kontrast | Sehen | Smart color inversion |
+| Graustufen | Sehen | Grayscale filter |
+| Animationen | Sehen | Pauses all CSS animations & transitions |
+| Schriftgröße | Lesen | 4-step font size stepper (100% → 150%) |
+| Links hervorheben | Lesen | Adds outline + underline to all links |
+| Abstände | Lesen | Increases letter & word spacing |
+| Zeilenhöhe | Lesen | Sets line-height to 1.8 |
+| Dyslexie-Schrift | Lesen | Loads & applies OpenDyslexic font |
+| Großer Cursor | Motorik | Replaces cursor with a large SVG pointer |
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+All toggle states are saved to `localStorage` and CSS effects are re-applied automatically on every page load.
 
-## Creating a project
+---
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Roadmap
+
+Features planned for upcoming releases:
+
+| Feature | Category | Description |
+|---|---|---|
+| 🔲 Zusätzlicher Kontrast | Sehen | Forces text to pure black/white with a contrasting background |
+| 🔲 Bilder ausblenden | Sehen | Hides all images on the page |
+| 🔲 Farben entsättigen | Sehen | Reduces color saturation for visual comfort |
+| 🔲 ADHS-Modus | Fokus | Distraction-free browsing, hides decorative elements |
+| 🔲 Screenreader-Hinweise | Navigation | Visual indicators for screen reader landmarks |
+
+> Want a feature sooner? [Open an issue](../../issues) or add it yourself — it's just one file in `src/lib/features/`.
+
+---
+
+## Installation
 
 ```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+npm install github:mow09/svelte-accessability-widget
 ```
 
-To recreate this project with the same configuration:
+Then install the peer dependencies if you haven't already:
 
 ```sh
-# recreate this project
-npx sv@0.13.0 create --template library --types ts --add prettier eslint tailwindcss="plugins:none" --install npm svelte-accessability-widget
+npm install svelte @lucide/svelte
 ```
+
+> **Peer dependencies:** `svelte ^5.0.0`, `@lucide/svelte ^1.7.0`
+
+---
+
+## Basic usage
+
+```svelte
+<script>
+  import { AccessibilityWidget } from 'svelte-accessability-widget';
+</script>
+
+<AccessibilityWidget theme="indigo" position="bottom-right" />
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `theme` | `ThemePreset \| Partial<ThemeConfig>` | `'indigo'` | Color preset or custom theme object |
+| `position` | `'bottom-right' \| 'bottom-left'` | `'bottom-right'` | FAB position |
+| `darkMode` | `boolean \| undefined` | `undefined` | Force dark/light or auto-detect |
+| `persist` | `boolean` | `true` | Save toggle states to localStorage |
+| `showBranding` | `boolean` | `false` | Show "Powered by" footer |
+| `labels` | `Labels` | German defaults | Override any UI string |
+| `features` | `FeatureConfig[]` | `[]` | Additional features to show in the panel |
+
+---
+
+## Theme presets
+
+`'indigo'` · `'violet'` · `'emerald'` · `'rose'` · `'amber'` · `'slate'`
+
+```svelte
+<AccessibilityWidget theme="emerald" />
+```
+
+### Custom theme
+
+```svelte
+<AccessibilityWidget
+  theme={{
+    primary: '#0ea5e9',
+    primaryHover: '#0284c7',
+    primaryText: '#ffffff',
+    background: '#ffffff',
+    surface: '#f0f9ff',
+    text: '#0c4a6e',
+    border: '#bae6fd',
+    muted: '#64748b'
+  }}
+/>
+```
+
+---
+
+## Labels (i18n)
+
+Defaults are German. Override any string:
+
+```svelte
+<AccessibilityWidget
+  labels={{
+    title: 'Accessibility',
+    subtitle: 'Adjust the display to your needs',
+    close: 'Close',
+    reset: 'Reset all',
+    hideToolbar: 'Hide toolbar'
+  }}
+/>
+```
+
+---
+
+## Adding features
+
+### With CSS — just pass a `css` string
+
+The simplest way. The CSS is injected when the toggle is on and removed when off. State persists across reloads.
+
+```svelte
+<script>
+  import { AccessibilityWidget } from 'svelte-accessability-widget';
+  import { Focus } from '@lucide/svelte';
+</script>
+
+<AccessibilityWidget
+  features={[
+    {
+      id: 'focus-highlight',
+      label: 'Fokus hervorheben',
+      category: 'Sehen',
+      size: 'sm',
+      icon: Focus,
+      css: `:focus { outline: 3px solid orange !important; outline-offset: 3px !important; }`
+    }
+  ]}
+/>
+```
+
+Features are automatically grouped by `category`. A new category string creates a new section heading.
+
+### With custom UI — `{#snippet extra()}`
+
+For features that need sliders, steppers, or any custom Svelte component:
+
+```svelte
+<AccessibilityWidget>
+  {#snippet extra()}
+    <!-- your fully custom component here -->
+  {/snippet}
+</AccessibilityWidget>
+```
+
+### Custom branding footer
+
+```svelte
+<AccessibilityWidget showBranding={true}>
+  {#snippet branding()}
+    <a href="https://yoursite.com">Barrierefreiheit by YourBrand</a>
+  {/snippet}
+</AccessibilityWidget>
+```
+
+---
+
+## `FeatureConfig` type
+
+```ts
+interface FeatureConfig {
+  id: string;
+  label: string;
+  description?: string;
+  icon?: Component;             // any Lucide icon component
+  category?: string;            // groups features under a section heading
+  size?: 'sm' | 'md' | 'lg';  // 'sm' = compact card (default), 'md'/'lg' = full-width row
+  css?: string;                 // CSS injected when the toggle is active
+}
+```
+
+---
+
+## Exported APIs
+
+```ts
+import {
+  // Main component
+  AccessibilityWidget,
+
+  // Primitive components (for custom feature UIs)
+  FeatureCard,           // compact icon + label toggle card (sm)
+  FeatureRow,            // full-width icon + label + toggle row (md/lg)
+
+  // Built-in feature components
+  HighContrast,
+  Grayscale,
+  PauseAnimations,
+  FontSize,
+  HighlightLinks,
+  TextSpacing,
+  LineHeight,
+  DyslexiaFont,
+  BigCursor,
+
+  // Theme utilities
+  presets,               // record of all ThemeConfig presets
+  resolveTheme,          // resolveTheme(preset, isDark) → ThemeConfig
+
+  // CSS utility
+  injectStyle,           // injectStyle(id, css) — idempotent style tag injection
+  removeStyle,           // removeStyle(id) — removes injected style tag
+} from 'svelte-accessability-widget';
+```
+
+---
+
+## Tech stack
+
+- **Svelte 5** — Runes (`$state`, `$derived`, `$props`, snippets)
+- **TypeScript** — fully typed API
+- **Tailwind CSS 4** — utility-first styling
+- **Lucide Svelte** — icons
+
+---
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
 ```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+npm install
+npm run dev        # demo app at localhost:5173
+npm run check      # TypeScript + Svelte diagnostics
+npm run build      # build the library
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
-
-## Building
-
-To build your library:
-
-```sh
-npm pack
-```
-
-To create a production version of your showcase app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```sh
-npm publish
-```
+Everything in `src/lib/` is the library. `src/routes/` is the demo app.
