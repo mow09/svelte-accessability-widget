@@ -1,4 +1,15 @@
-# Svelte library
+# Svelte Accessibility Widget
+
+An ADHD-friendly accessibility widget for Svelte applications, providing focused browsing and distraction-free experiences.
+
+## Tech Stack
+
+- **Svelte 5** - Modern reactive UI framework
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first CSS framework
+- **Vite** - Fast build tool and dev server
+- **Lucide Svelte** - Beautiful icon components
+- **ESLint & Prettier** - Code quality and formatting
 
 Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
 
